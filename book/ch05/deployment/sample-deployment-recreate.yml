@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment-recreate
+spec:
+  strategy:
+    type: Recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-deployment-recreate
+  template:
+    metadata:
+      labels:
+        app: sample-deployment-recreate
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:1.16
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

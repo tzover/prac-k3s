@@ -1,0 +1,42 @@
+#deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+
+# replicas
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0 # 0 -> replicas 以上 コンテナが立たない
+      maxUnavailable: 1 # repricas 以下にする
+
+  # pod
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:1.16
+          resources:
+            requests:
+              memory: 2Gi # 2GB
+              cpu: 1000m # core数 1000m = 1 core
+            limits:
+              memory: 2Gi
+              cpu: 1000m
+          volumeMounts:
+            - mountPath: "/home/src"
+              name: myappmount
+      volumes:
+        - name: myappmount
+          hostPath:
+            path: /home/nxyt-2/Projects/k3stry/mount

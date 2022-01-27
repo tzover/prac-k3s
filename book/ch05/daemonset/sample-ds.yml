@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sample-ds
+spec:
+  selector:
+    matchLabels:
+      app: sample-ds
+  template:
+    metadata:
+      labels:
+        app: sample-ds
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:1.16
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

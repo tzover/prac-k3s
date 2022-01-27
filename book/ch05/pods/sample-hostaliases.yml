@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-hostaliases
+  labels:
+    name: sample-hostaliases
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:1.16
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+  hostAliases:
+    - ip: 8.8.8.8
+      hostnames:
+        - google-dns
+        - google-public-dns
+# p-134 aisin dns maybe to use

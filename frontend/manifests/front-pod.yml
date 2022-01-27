@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: front-pod
+  labels:
+    name: front-pod
+spec:
+  containers:
+    - name: front-pod
+      image: node

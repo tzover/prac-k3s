@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deploy
+spec:
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+        - name: kube-simple-sample-frontend
+          image: registry.gitlab.com/asnedgecloud1/kube-simple-sample/frontend:feature_develop-latest
+          imagePullPolicy: Always
+          # command:
+          #   - sleep
+          #   - infinity
+      imagePullSecrets:
+        - name: asn-regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-clip
+spec:
+  type: ClusterIP
+  selector:
+    app: front
+  ports:
+    - name: "http-3000-port"
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
